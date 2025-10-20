@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="card">
+  <h2>Personalized Suggestions</h2>
+  <div class="summary">
+    <p><strong>Name:</strong> {{ summary.name|e }}</p>
+    <p><strong>Age:</strong> {{ summary.age }}</p>
+    <p><strong>Mood:</strong> {{ summary.mood.title() }}</p>
+    <p><strong>Sleep:</strong> {{ summary.sleep_hours }} hours</p>
+    <p><strong>Stress:</strong> {{ summary.stress_level }} / 5</p>
+  </div>
+
+  <div class="score-cards">
+    <div class="score-card">
+      <div class="score">PHQ‑9: {{ summary.phq9_score }}</div>
+      <div class="badge">{{ summary.phq9_level }}</div>
+    </div>
+    <div class="score-card">
+      <div class="score">GAD‑7: {{ summary.gad7_score }}</div>
+      <div class="badge">{{ summary.gad7_level }}</div>
+    </div>
+  </div>
+
+  <ul class="suggestions">
+    {% for s in summary.suggestions %}
+      <li>{{ s }}</li>
+    {% endfor %}
+  </ul>
+
+  {% if ai_feedback %}
+    <div class="ai-card">
+      <h3>AI-assisted insights</h3>
+      <p>{{ ai_feedback }}</p>
+    </div>
+  {% endif %}
+
+  {% if summary.risk_flag %}
+    <div class="alert">
+      If you are in immediate danger, call your local emergency number.
+    </div>
+  {% endif %}
+
+  <div class="actions">
+    <a class="button" href="{{ url_for('main.index') }}">Back</a>
+  </div>
+</section>
+{% endblock %}
+
+
