@@ -13,31 +13,41 @@
   <div class="score-cards">
     <div class="score-card">
       <div class="score">PHQ‑9: {{ summary.phq9_score }}</div>
-      <div class="badge">{{ summary.phq9_level }}</div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width: {{ (summary.phq9_score / 27) * 100 }}%;"></div>
+      </div>
+      <div
+        class="badge {{ 'normal' if summary.phq9_level == 'Normal' else 'mild' if summary.phq9_level == 'Mild' else 'moderate' if summary.phq9_level == 'Moderate' else 'severe' }}">
+        {{ summary.phq9_level }}</div>
     </div>
     <div class="score-card">
       <div class="score">GAD‑7: {{ summary.gad7_score }}</div>
-      <div class="badge">{{ summary.gad7_level }}</div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width: {{ (summary.gad7_score / 21) * 100 }}%;"></div>
+      </div>
+      <div
+        class="badge {{ 'normal' if summary.gad7_level == 'Normal' else 'mild' if summary.gad7_level == 'Mild' else 'moderate' if summary.gad7_level == 'Moderate' else 'severe' }}">
+        {{ summary.gad7_level }}</div>
     </div>
   </div>
 
   <ul class="suggestions">
     {% for s in summary.suggestions %}
-      <li>{{ s }}</li>
+    <li>{{ s }}</li>
     {% endfor %}
   </ul>
 
   {% if ai_feedback %}
-    <div class="ai-card">
-      <h3>AI-assisted insights</h3>
-      <p>{{ ai_feedback }}</p>
-    </div>
+  <div class="ai-card">
+    <h3>AI-assisted insights</h3>
+    <p>{{ ai_feedback }}</p>
+  </div>
   {% endif %}
 
   {% if summary.risk_flag %}
-    <div class="alert">
-      If you are in immediate danger, call your local emergency number.
-    </div>
+  <div class="alert">
+    If you are in immediate danger, call your local emergency number.
+  </div>
   {% endif %}
 
   <div class="actions">
@@ -45,5 +55,3 @@
   </div>
 </section>
 {% endblock %}
-
-

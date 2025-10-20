@@ -5,73 +5,80 @@
   <div id="errorBanner" class="error-banner" role="alert">Please fill all required fields.</div>
   <form id="mh-form" method="post" action="{{ url_for('main.analyze') }}" novalidate>
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <div class="form-row">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" value="{{ (form.name if form else '')|e }}" required>
-      {% if errors and errors.get('name') %}<span class="error">{{ errors.get('name') }}</span>{% endif %}
+    <div class="grid-2">
+      <div class="form-row">
+        <label for="name"><i class="fas fa-user icon"></i>Name</label>
+        <input type="text" id="name" name="name" value="{{ (form.name if form else '')|e }}" required>
+        {% if errors and errors.get('name') %}<span class="error">{{ errors.get('name') }}</span>{% endif %}
+      </div>
+
+      <div class="form-row">
+        <label for="age"><i class="fas fa-birthday-cake icon"></i>Age</label>
+        <input type="number" id="age" name="age" min="13" max="120" value="{{ (form.age if form else '')|e }}" required>
+        {% if errors and errors.get('age') %}<span class="error">{{ errors.get('age') }}</span>{% endif %}
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="form-row">
+        <label for="mood"><i class="fas fa-smile icon"></i>Mood</label>
+        <select id="mood" name="mood" required>
+          {% set selected = (form.mood if form else '') %}
+          <option value="" disabled {% if not selected %}selected{% endif %}>Select...</option>
+          {% for m in ['very low','low','neutral','good','very good'] %}
+          <option value="{{ m }}" {% if selected==m %}selected{% endif %}>{{ m.title() }}</option>
+          {% endfor %}
+        </select>
+        {% if errors and errors.get('mood') %}<span class="error">{{ errors.get('mood') }}</span>{% endif %}
+      </div>
+
+      <div class="form-row">
+        <label for="sleep"><i class="fas fa-moon icon"></i>Sleep (hours last night)</label>
+        <input type="number" id="sleep" name="sleep" step="0.5" min="0" max="24"
+          value="{{ (form.sleep if form else '')|e }}" required>
+        {% if errors and errors.get('sleep') %}<span class="error">{{ errors.get('sleep') }}</span>{% endif %}
+      </div>
+
+      <div class="form-row">
+        <label for="stress"><i class="fas fa-brain icon"></i>Stress Level (1 = low, 5 = high)</label>
+        <input type="number" id="stress" name="stress" min="1" max="5" value="{{ (form.stress if form else '')|e }}"
+          required>
+        {% if errors and errors.get('stress') %}<span class="error">{{ errors.get('stress') }}</span>{% endif %}
+      </div>
     </div>
 
     <div class="form-row">
-      <label for="age">Age</label>
-      <input type="number" id="age" name="age" min="13" max="120" value="{{ (form.age if form else '')|e }}" required>
-      {% if errors and errors.get('age') %}<span class="error">{{ errors.get('age') }}</span>{% endif %}
-    </div>
-
-    <div class="form-row">
-      <label for="mood">Mood</label>
-      <select id="mood" name="mood" required>
-        {% set selected = (form.mood if form else '') %}
-        <option value="" disabled {% if not selected %}selected{% endif %}>Select...</option>
-        {% for m in ['very low','low','neutral','good','very good'] %}
-          <option value="{{ m }}" {% if selected == m %}selected{% endif %}>{{ m.title() }}</option>
-        {% endfor %}
-      </select>
-      {% if errors and errors.get('mood') %}<span class="error">{{ errors.get('mood') }}</span>{% endif %}
-    </div>
-
-    <div class="form-row">
-      <label for="sleep">Sleep (hours last night)</label>
-      <input type="number" id="sleep" name="sleep" step="0.5" min="0" max="24" value="{{ (form.sleep if form else '')|e }}" required>
-      {% if errors and errors.get('sleep') %}<span class="error">{{ errors.get('sleep') }}</span>{% endif %}
-    </div>
-
-    <div class="form-row">
-      <label for="stress">Stress (1 = low, 5 = high)</label>
-      <input type="number" id="stress" name="stress" min="1" max="5" value="{{ (form.stress if form else '')|e }}" required>
-      {% if errors and errors.get('stress') %}<span class="error">{{ errors.get('stress') }}</span>{% endif %}
-    </div>
-
-    <div class="form-row">
-      <label for="thoughts">Notes (optional)</label>
-      <textarea id="thoughts" name="thoughts" rows="4" placeholder="Anything else on your mind?">{{ (form.thoughts if form else '')|e }}</textarea>
+      <label for="thoughts"><i class="fas fa-comment icon"></i>Notes (optional)</label>
+      <textarea id="thoughts" name="thoughts" rows="4"
+        placeholder="Anything else on your mind?">{{ (form.thoughts if form else '')|e }}</textarea>
     </div>
 
     <hr class="section-sep">
     <h3>PHQ-9 (past 2 weeks)</h3>
     <p class="hint">0 = Not at all, 1 = Several days, 2 = More than half the days, 3 = Nearly every day</p>
     {% set phq_items = [
-      'Little interest or pleasure in doing things',
-      'Feeling down, depressed, or hopeless',
-      'Trouble falling or staying asleep, or sleeping too much',
-      'Feeling tired or having little energy',
-      'Poor appetite or overeating',
-      'Feeling bad about yourself — or that you are a failure',
-      'Trouble concentrating on things',
-      'Moving or speaking slowly or being fidgety/restless',
-      'Thoughts that you would be better off dead or of hurting yourself'
+    'Little interest or pleasure in doing things',
+    'Feeling down, depressed, or hopeless',
+    'Trouble falling or staying asleep, or sleeping too much',
+    'Feeling tired or having little energy',
+    'Poor appetite or overeating',
+    'Feeling bad about yourself — or that you are a failure',
+    'Trouble concentrating on things',
+    'Moving or speaking slowly or being fidgety/restless',
+    'Thoughts that you would be better off dead or of hurting yourself'
     ] %}
     <div class="grid-qs">
       {% for q in phq_items %}
-        <div class="form-row">
-          <label>{{ loop.index }}. {{ q }}</label>
-          <select name="phq9_{{ loop.index }}" required>
-            {% set sel = (form['phq9_' ~ loop.index] if form else '') %}
-            <option value="" disabled {% if not sel %}selected{% endif %}>Select...</option>
-            {% for v in [0,1,2,3] %}
-              <option value="{{ v }}" {% if sel|string == v|string %}selected{% endif %}>{{ v }}</option>
-            {% endfor %}
-          </select>
-        </div>
+      <div class="form-row">
+        <label>{{ loop.index }}. {{ q }}</label>
+        <select name="phq9_{{ loop.index }}" required>
+          {% set sel = (form['phq9_' ~ loop.index] if form else '') %}
+          <option value="" disabled {% if not sel %}selected{% endif %}>Select...</option>
+          {% for v in [0,1,2,3] %}
+          <option value="{{ v }}" {% if sel|string==v|string %}selected{% endif %}>{{ v }}</option>
+          {% endfor %}
+        </select>
+      </div>
       {% endfor %}
     </div>
 
@@ -79,47 +86,72 @@
     <h3>GAD-7 (past 2 weeks)</h3>
     <p class="hint">0 = Not at all, 1 = Several days, 2 = Over half the days, 3 = Nearly every day</p>
     {% set gad_items = [
-      'Feeling nervous, anxious, or on edge',
-      'Not being able to stop or control worrying',
-      'Worrying too much about different things',
-      'Trouble relaxing',
-      'Being so restless that it is hard to sit still',
-      'Becoming easily annoyed or irritable',
-      'Feeling afraid, as if something awful might happen'
+    'Feeling nervous, anxious, or on edge',
+    'Not being able to stop or control worrying',
+    'Worrying too much about different things',
+    'Trouble relaxing',
+    'Being so restless that it is hard to sit still',
+    'Becoming easily annoyed or irritable',
+    'Feeling afraid, as if something awful might happen'
     ] %}
     <div class="grid-qs">
       {% for q in gad_items %}
-        <div class="form-row">
-          <label>{{ loop.index }}. {{ q }}</label>
-          <select name="gad7_{{ loop.index }}" required>
-            {% set sel = (form['gad7_' ~ loop.index] if form else '') %}
-            <option value="" disabled {% if not sel %}selected{% endif %}>Select...</option>
-            {% for v in [0,1,2,3] %}
-              <option value="{{ v }}" {% if sel|string == v|string %}selected{% endif %}>{{ v }}</option>
-            {% endfor %}
-          </select>
-        </div>
+      <div class="form-row">
+        <label>{{ loop.index }}. {{ q }}</label>
+        <select name="gad7_{{ loop.index }}" required>
+          {% set sel = (form['gad7_' ~ loop.index] if form else '') %}
+          <option value="" disabled {% if not sel %}selected{% endif %}>Select...</option>
+          {% for v in [0,1,2,3] %}
+          <option value="{{ v }}" {% if sel|string==v|string %}selected{% endif %}>{{ v }}</option>
+          {% endfor %}
+        </select>
+      </div>
       {% endfor %}
     </div>
 
     <hr class="section-sep">
-    <h3>Lifestyle & Support</h3>
+    <h3><i class="fas fa-heartbeat icon"></i>Lifestyle & Support</h3>
     <div class="grid-2">
       <div class="form-row">
-        <label for="exercise_days">Exercise days per week</label>
-        <input type="number" id="exercise_days" name="exercise_days" min="0" max="7" value="{{ (form.exercise_days if form else '')|e }}" required>
+        <label for="exercise_days"><i class="fas fa-running icon"></i>Exercise days per week</label>
+        <input type="number" id="exercise_days" name="exercise_days" min="0" max="7"
+          value="{{ (form.exercise_days if form else '')|e }}" required>
       </div>
       <div class="form-row">
-        <label for="caffeine_cups">Caffeine cups per day</label>
-        <input type="number" id="caffeine_cups" name="caffeine_cups" min="0" max="20" value="{{ (form.caffeine_cups if form else '')|e }}" required>
+        <label for="caffeine_cups"><i class="fas fa-coffee icon"></i>Caffeine cups per day</label>
+        <input type="number" id="caffeine_cups" name="caffeine_cups" min="0" max="20"
+          value="{{ (form.caffeine_cups if form else '')|e }}" required>
       </div>
       <div class="form-row">
-        <label for="screen_hours">Screen time hours per day</label>
-        <input type="number" id="screen_hours" name="screen_hours" min="0" max="24" step="0.5" value="{{ (form.screen_hours if form else '')|e }}" required>
+        <label for="screen_hours"><i class="fas fa-mobile-alt icon"></i>Screen time hours per day</label>
+        <input type="number" id="screen_hours" name="screen_hours" min="0" max="24" step="0.5"
+          value="{{ (form.screen_hours if form else '')|e }}" required>
       </div>
       <div class="form-row">
-        <label for="support_level">Perceived social support (1-5)</label>
-        <input type="number" id="support_level" name="support_level" min="1" max="5" value="{{ (form.support_level if form else '')|e }}" required>
+        <label for="support_level"><i class="fas fa-users icon"></i>Perceived social support (1-5)</label>
+        <input type="number" id="support_level" name="support_level" min="1" max="5"
+          value="{{ (form.support_level if form else '')|e }}" required>
+      </div>
+      <div class="form-row">
+        <label for="work_hours"><i class="fas fa-briefcase icon"></i>Hours of work/school per week</label>
+        <input type="number" id="work_hours" name="work_hours" min="0" max="168"
+          value="{{ (form.work_hours if form else '')|e }}" required>
+      </div>
+      <div class="form-row">
+        <label for="alcohol_drinks"><i class="fas fa-wine-bottle icon"></i>Alcohol drinks per week</label>
+        <input type="number" id="alcohol_drinks" name="alcohol_drinks" min="0" max="50"
+          value="{{ (form.alcohol_drinks if form else '')|e }}" required>
+      </div>
+      <div class="form-row">
+        <label for="diet_quality"><i class="fas fa-utensils icon"></i>Diet quality (1-5)</label>
+        <input type="number" id="diet_quality" name="diet_quality" min="1" max="5"
+          value="{{ (form.diet_quality if form else '')|e }}" required>
+      </div>
+      <div class="form-row">
+        <label for="physical_health"><i class="fas fa-stethoscope icon"></i>Chronic pain or physical health issues
+          (1-5)</label>
+        <input type="number" id="physical_health" name="physical_health" min="1" max="5"
+          value="{{ (form.physical_health if form else '')|e }}" required>
       </div>
     </div>
 
@@ -140,5 +172,3 @@
   </form>
 </section>
 {% endblock %}
-
-
