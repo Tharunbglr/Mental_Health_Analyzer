@@ -11,6 +11,10 @@ bp = Blueprint("main", __name__)
 def index():
     return render_template("index.html")
 
+@bp.get("/test")
+def test():
+    return "App is working!"
+
 
 @bp.post("/analyze")
 def analyze():

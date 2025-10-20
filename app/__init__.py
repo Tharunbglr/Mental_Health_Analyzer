@@ -85,6 +85,10 @@ def _configure_logging(app: Flask) -> None:
 
 
 def _configure_security(app: Flask) -> None:
+    # Disable Talisman on Railway to prevent redirect issues
+    if app.config.get('ENV') == 'production' and 'railway' in os.getenv('RAILWAY_ENVIRONMENT', ''):
+        return
+    
     csp = {
         'default-src': ["'self'"],
         'script-src': ["'self'"],
