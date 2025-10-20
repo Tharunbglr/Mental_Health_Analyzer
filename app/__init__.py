@@ -15,6 +15,9 @@ from .config import get_config_class
 
 def create_app() -> Flask:
     app = Flask(__name__)
+    # Fix Railway redirects issue
+    app.config['PREFERRED_URL_SCHEME'] = 'https'
+    app.config['SERVER_NAME'] = None
     # Load env from project root and instance folder if present
     load_dotenv()  # .env in project root
     try:
