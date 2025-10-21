@@ -9,12 +9,32 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}?v=2">
+
+  <!-- Meta tags for SEO and sharing -->
+  <meta name="description"
+    content="Free, confidential mental health check-in with personalized suggestions and crisis resources.">
+  <meta name="keywords" content="mental health, well-being, health check, mental health resources, crisis support">
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:title" content="Mental Health Analyzer">
+  <meta property="og:description" content="Free, confidential mental health check-in with personalized suggestions.">
+  <meta property="og:type" content="website">
+
+  <!-- Mobile theme -->
+  <meta name="theme-color" content="#3b82f6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 
 <body>
   <header class="site-header">
+    <div class="logo">
+      <img src="{{ url_for('static', filename='images/logo-animated.svg') }}" alt="Mental Health Analyzer Logo"
+        width="120" height="120">
+    </div>
     <h1>Mental Health Analyzer</h1>
     <p class="tagline">Personalized, informative suggestions — not medical advice</p>
     <div class="emergency-banner">

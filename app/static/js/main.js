@@ -1,4 +1,60 @@
+// Progressive enhancement for score cards
+function initScoreCards() {
+  const cards = document.querySelectorAll('.score-card');
+  cards.forEach(card => {
+    const score = card.querySelector('.score');
+    if (score) {
+      const finalScore = parseInt(score.textContent);
+      score.textContent = '0';
+      let currentScore = 0;
+
+      const interval = setInterval(() => {
+        currentScore++;
+        score.textContent = currentScore;
+        if (currentScore >= finalScore) {
+          clearInterval(interval);
+        }
+      }, 30);
+    }
+  });
+}
+
+// Smooth scroll for anchor links
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute('href'))?.scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+  });
+}
+
+// Initialize intersection observer for animations
+function initIntersectionObserver() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.score-card, .card').forEach(element => {
+    observer.observe(element);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize enhanced features
+  initSmoothScroll();
+  initIntersectionObserver();
+
+  // Initialize score cards if we're on a results page
+  if (document.querySelector('.score-card')) {
+    initScoreCards();
+  }
   const form = document.getElementById('mh-form');
   // Apply progress widths set in templates using data-width so
   // progress bars render correctly on pages without the form

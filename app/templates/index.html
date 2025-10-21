@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="hero-image" style="background-image: url({{ url_for('static', filename='images/hero-background.svg') }})">
+  <div class="hero-content">
+    <h2>Take a Moment for Your Mental Well-being</h2>
+    <p>Complete this confidential assessment to receive personalized insights and suggestions</p>
+  </div>
+</div>
 <section class="card">
   <h2>Your Well-being Check-in</h2>
   <div id="errorBanner" class="error-banner" role="alert">Please fill all required fields.</div>

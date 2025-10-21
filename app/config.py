@@ -24,6 +24,25 @@ class DevelopmentConfig(BaseConfig):
 class ProductionConfig(BaseConfig):
     ENV = "production"
     DEBUG = False
+    
+    # Enhanced security settings
+    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = 'Strict'
+    PERMANENT_SESSION_LIFETIME = 1800  # 30 minutes
+    
+    # Rate limiting
+    RATELIMIT_DEFAULT = "100/day"
+    RATELIMIT_STORAGE_URI = os.getenv("RATELIMIT_STORAGE_URI", "redis://localhost:6379/0")
+    
+    # AI rate limits
+    AI_RATELIMIT = "50/day"
+    AI_TIMEOUT = 10
+    AI_MAX_RETRIES = 2
+    
+    # Health check
+    HEALTH_CHECK_ENABLED = True
+    HEALTH_CHECK_REDIS = True
 
 
 def get_config_class():
