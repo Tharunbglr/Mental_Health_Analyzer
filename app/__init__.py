@@ -15,16 +15,24 @@ from .config import get_config_class
 
 def create_app() -> Flask:
     app = Flask(__name__)
-    # Fix Railway redirects issue
-    app.config["PREFERRED_URL_SCHEME"] = "https"
-    app.config["SERVER_NAME"] = None
-    # Load env from project root and instance folder if present
+    
+    # Load configuration
     load_dotenv()  # .env in project root
     try:
         load_dotenv(os.path.join(app.instance_path, ".env"))
     except Exception:
         pass
+    
+    # Apply configuration
     app.config.from_object(get_config_class())
+    
+    # Railway specific configuration
+    if os.getenv("RAILWAY_ENVIRONMENT"):
+        app.config["PREFERRED_URL_SCHEME"] = "https"
+        app.config["SERVER_NAME"] = None
+        # Ensure we have a secret key
+        if not app.config["SECRET_KEY"] or app.config["SECRET_KEY"] == "change-this-in-production":
+            app.config["SECRET_KEY"] = os.urandom(32).hex()
 
     # Ensure instance and data dirs exist
     Path(app.instance_path).mkdir(parents=True, exist_ok=True)

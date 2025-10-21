@@ -31,9 +31,9 @@ class ProductionConfig(BaseConfig):
     SESSION_COOKIE_SAMESITE = 'Strict'
     PERMANENT_SESSION_LIFETIME = 1800  # 30 minutes
     
-    # Rate limiting
+    # Rate limiting - use memory storage by default for Railway
     RATELIMIT_DEFAULT = "100/day"
-    RATELIMIT_STORAGE_URI = os.getenv("RATELIMIT_STORAGE_URI", "redis://localhost:6379/0")
+    RATELIMIT_STORAGE_URI = os.getenv("REDIS_URL", "memory://")
     
     # AI rate limits
     AI_RATELIMIT = "50/day"
@@ -42,7 +42,7 @@ class ProductionConfig(BaseConfig):
     
     # Health check
     HEALTH_CHECK_ENABLED = True
-    HEALTH_CHECK_REDIS = True
+    HEALTH_CHECK_REDIS = False  # Disable Redis health check by default
 
 
 def get_config_class():
