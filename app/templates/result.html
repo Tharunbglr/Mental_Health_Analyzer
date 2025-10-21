@@ -12,23 +12,33 @@
 
   <div class="score-cards">
     <div class="score-card">
-      <div class="score">PHQ‑9: {{ summary.phq9_score }}</div>
+      <div class="score">PHQ‑9: {{ summary.phq9_score }} / 27</div>
       <div class="progress-bar">
-        <div class="progress-fill" style="width: {{ (summary.phq9_score / 27) * 100 }}%;"></div>
+        <div class="progress-fill" style="width: {{ ((summary.phq9_score / 27) * 100) | round(1) ~ '%' }};"></div>
       </div>
       <div
-        class="badge {{ 'normal' if summary.phq9_level == 'Normal' else 'mild' if summary.phq9_level == 'Mild' else 'moderate' if summary.phq9_level == 'Moderate' else 'severe' }}">
+        class="badge {{ 'normal' if summary.phq9_level == 'Minimal' else 'mild' if summary.phq9_level == 'Mild' else 'moderate' if 'Moderate' in summary.phq9_level else 'severe' }}">
         {{ summary.phq9_level }}</div>
     </div>
     <div class="score-card">
-      <div class="score">GAD‑7: {{ summary.gad7_score }}</div>
+      <div class="score">GAD‑7: {{ summary.gad7_score }} / 21</div>
       <div class="progress-bar">
-        <div class="progress-fill" style="width: {{ (summary.gad7_score / 21) * 100 }}%;"></div>
+        <div class="progress-fill" style="width: {{ ((summary.gad7_score / 21) * 100) | round(1) ~ '%' }};"></div>
       </div>
       <div
-        class="badge {{ 'normal' if summary.gad7_level == 'Normal' else 'mild' if summary.gad7_level == 'Mild' else 'moderate' if summary.gad7_level == 'Moderate' else 'severe' }}">
+        class="badge {{ 'normal' if summary.gad7_level == 'Minimal' else 'mild' if summary.gad7_level == 'Mild' else 'moderate' if summary.gad7_level == 'Moderate' else 'severe' }}">
         {{ summary.gad7_level }}</div>
     </div>
+  </div>
+
+  <div class="interpretation card">
+    <h3>How to interpret scores</h3>
+    <p class="hint"><strong>PHQ‑9:</strong> 0–4 minimal; 5–9 mild; 10–14 moderate; 15–19 moderately severe; 20–27
+      severe.</p>
+    <p class="hint"><strong>GAD‑7:</strong> 0–4 minimal; 5–9 mild; 10–14 moderate; 15–21 severe.</p>
+    <p class="hint">These tools screen for symptoms — they do not replace clinical assessment. If your scores fall in
+      the moderate–severe range, consider reaching out to a healthcare professional or a local mental health service.
+    </p>
   </div>
 
   <ul class="suggestions">

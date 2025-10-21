@@ -11,6 +11,8 @@ def app():
     application = create_app()
     application.config.update({
         "TESTING": True,
+        # Disable CSRF in tests to allow form posts without tokens
+        "WTF_CSRF_ENABLED": False,
     })
     yield application
 

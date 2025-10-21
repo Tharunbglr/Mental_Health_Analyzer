@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from .ai import generate_ai_feedback
+from .utils import score_phq9, score_gad7
 
 
 bp = Blueprint("main", __name__)
@@ -54,22 +55,30 @@ def analyze():
     except ValueError:
         errors["stress"] = "Stress must be a number."
 
-    # Collect PHQ-9 and GAD-7 answers
+    # Collect PHQ-9 and GAD-7 answers (validated to be integers 0-3)
     phq9 = []
     for i in range(1, 10):
         key = f"phq9_{i}"
+        val = request.form.get(key, "").strip()
         try:
-            phq9.append(int(request.form.get(key, "")))
-        except ValueError:
-            errors[key] = "Required"
+            v = int(val)
+            if v < 0 or v > 3:
+                raise ValueError()
+            phq9.append(v)
+        except Exception:
+            errors[key] = "Select 0-3"
 
     gad7 = []
     for i in range(1, 8):
         key = f"gad7_{i}"
+        val = request.form.get(key, "").strip()
         try:
-            gad7.append(int(request.form.get(key, "")))
-        except ValueError:
-            errors[key] = "Required"
+            v = int(val)
+            if v < 0 or v > 3:
+                raise ValueError()
+            gad7.append(v)
+        except Exception:
+            errors[key] = "Select 0-3"
 
     # Lifestyle
     try:
@@ -149,28 +158,14 @@ def analyze():
             "You're doing many things right. Keep monitoring your well-being and maintain supportive routines."
         )
 
-    # Scoring helpers
-    phq9_score = sum(phq9)
-    if phq9_score <= 4:
-        phq_level = "Minimal"
-    elif phq9_score <= 9:
-        phq_level = "Mild"
-    elif phq9_score <= 14:
-        phq_level = "Moderate"
-    elif phq9_score <= 19:
-        phq_level = "Moderately severe"
-    else:
-        phq_level = "Severe"
+    # Use centralized scoring helpers
+    phq9_score, phq_level, suicidal_flag = score_phq9(phq9)
+    gad7_score, gad7_level = score_gad7(gad7)
 
-    gad7_score = sum(gad7)
-    if gad7_score <= 4:
-        gad_level = "Minimal"
-    elif gad7_score <= 9:
-        gad_level = "Mild"
-    elif gad7_score <= 14:
-        gad_level = "Moderate"
-    else:
-        gad_level = "Severe"
+    # escalate risk if suicidal ideation present
+    if suicidal_flag:
+        risk_flag = True
+        suggestions.insert(0, "You reported some thoughts of self-harm or that you'd be better off dead. Please seek immediate help or contact a crisis hotline.")
 
     # Lifestyle nudges
     if exercise_days < 2:
@@ -194,7 +189,7 @@ def analyze():
         "phq9_score": phq9_score,
         "phq9_level": phq_level,
         "gad7_score": gad7_score,
-        "gad7_level": gad_level,
+        "gad7_level": gad7_level,
         "exercise_days": exercise_days,
         "caffeine_cups": caffeine_cups,
         "screen_hours": screen_hours,

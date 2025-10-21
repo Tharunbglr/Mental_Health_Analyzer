@@ -55,7 +55,7 @@ body {
     background: var(--panel);
     border: 1px solid #e2e8f0;
     border-radius: 16px;
-    padding: 32px;
+    padding: 28px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     margin-bottom: 24px;
 }
@@ -65,6 +65,14 @@ body {
     font-size: 1.8rem;
     font-weight: 600;
     color: var(--text);
+}
+
+.interpretation {
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(241, 245, 249, 0.6), rgba(255, 255, 255, 0.6));
+    border: 1px solid #e6eef8;
 }
 
 .form-row {
@@ -99,6 +107,10 @@ textarea:focus {
     outline: none;
     border-color: var(--accent);
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+select {
+    appearance: none;
 }
 
 .invalid {
@@ -156,7 +168,7 @@ button,
     color: white;
     border: none;
     border-radius: 12px;
-    padding: 14px 24px;
+    padding: 12px 20px;
     font-weight: 600;
     cursor: pointer;
     text-decoration: none;
@@ -201,6 +213,31 @@ button.loading .btn-spinner {
     font-size: 0.9rem;
     border-top: 1px solid #e2e8f0;
     margin-top: 48px;
+}
+
+.footer-columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 12px 16px;
+    align-items: start;
+}
+
+.footer-columns ul {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+}
+
+.footer-columns a {
+    color: var(--accent-2);
+    text-decoration: none;
+}
+
+.footer-columns a:hover {
+    text-decoration: underline;
 }
 
 .suggestions {
@@ -290,6 +327,10 @@ button.loading .btn-spinner {
     font-size: 1.3rem;
     font-weight: 700;
     margin-bottom: 8px;
+}
+
+.score-card .badge {
+    min-width: 100px;
 }
 
 .progress-bar {

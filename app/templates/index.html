@@ -55,7 +55,9 @@
 
     <hr class="section-sep">
     <h3>PHQ-9 (past 2 weeks)</h3>
-    <p class="hint">0 = Not at all, 1 = Several days, 2 = More than half the days, 3 = Nearly every day</p>
+    <p class="hint">For each item, select how often you were bothered by the problem over the last 2 weeks.</p>
+    <p class="hint">Response options: 0 = Not at all; 1 = Several days; 2 = More than half the days; 3 = Nearly every
+      day</p>
     {% set phq_items = [
     'Little interest or pleasure in doing things',
     'Feeling down, depressed, or hopeless',
@@ -74,9 +76,10 @@
         <select name="phq9_{{ loop.index }}" required>
           {% set sel = (form['phq9_' ~ loop.index] if form else '') %}
           <option value="" disabled {% if not sel %}selected{% endif %}>Select...</option>
-          {% for v in [0,1,2,3] %}
-          <option value="{{ v }}" {% if sel|string==v|string %}selected{% endif %}>{{ v }}</option>
-          {% endfor %}
+          <option value="0" {% if sel|string=='0' %}selected{% endif %}>0 — Not at all</option>
+          <option value="1" {% if sel|string=='1' %}selected{% endif %}>1 — Several days</option>
+          <option value="2" {% if sel|string=='2' %}selected{% endif %}>2 — More than half the days</option>
+          <option value="3" {% if sel|string=='3' %}selected{% endif %}>3 — Nearly every day</option>
         </select>
       </div>
       {% endfor %}
@@ -84,7 +87,8 @@
 
     <hr class="section-sep">
     <h3>GAD-7 (past 2 weeks)</h3>
-    <p class="hint">0 = Not at all, 1 = Several days, 2 = Over half the days, 3 = Nearly every day</p>
+    <p class="hint">For each item, select how often you were bothered by the problem over the last 2 weeks.</p>
+    <p class="hint">Response options: 0 = Not at all; 1 = Several days; 2 = Over half the days; 3 = Nearly every day</p>
     {% set gad_items = [
     'Feeling nervous, anxious, or on edge',
     'Not being able to stop or control worrying',
@@ -101,9 +105,10 @@
         <select name="gad7_{{ loop.index }}" required>
           {% set sel = (form['gad7_' ~ loop.index] if form else '') %}
           <option value="" disabled {% if not sel %}selected{% endif %}>Select...</option>
-          {% for v in [0,1,2,3] %}
-          <option value="{{ v }}" {% if sel|string==v|string %}selected{% endif %}>{{ v }}</option>
-          {% endfor %}
+          <option value="0" {% if sel|string=='0' %}selected{% endif %}>0 — Not at all</option>
+          <option value="1" {% if sel|string=='1' %}selected{% endif %}>1 — Several days</option>
+          <option value="2" {% if sel|string=='2' %}selected{% endif %}>2 — Over half the days</option>
+          <option value="3" {% if sel|string=='3' %}selected{% endif %}>3 — Nearly every day</option>
         </select>
       </div>
       {% endfor %}
@@ -157,10 +162,12 @@
 
     <div class="form-row checkbox-row">
       <label class="checkbox">
-        <input type="checkbox" id="use_ai" name="use_ai">
-        <span>Enhance suggestions using AI</span>
+        <input type="checkbox" id="use_ai" name="use_ai" value="on">
+        <span>I consent to anonymized AI-assisted suggestions (optional)</span>
       </label>
-      <small class="hint">Your inputs remain on this page; only analysis text is sent to the AI provider.</small>
+      <small class="hint">If checked, non-identifying summary data and sanitized notes will be sent to a third-party AI
+        provider to generate additional suggestions. No names or raw free-text longer than 500 characters are sent. You
+        may uncheck to keep analysis offline.</small>
     </div>
 
     <div class="actions">

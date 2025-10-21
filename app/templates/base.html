@@ -22,10 +22,30 @@
     {% block content %}{% endblock %}
   </main>
   <footer class="site-footer">
-    <small>
-      This tool is informational only and not a substitute for professional care. If in crisis, contact local emergency
-      services.
-    </small>
+    <div class="footer-columns">
+      <div>
+        <strong>Resources</strong>
+        <ul>
+          <li><a href="https://www.who.int/health-topics/mental-health" target="_blank" rel="noopener">WHO: Mental
+              health</a></li>
+          <li><a href="https://www.mentalhealth.gov/" target="_blank" rel="noopener">MentalHealth.gov</a></li>
+          <li><a href="https://www.samhsa.gov/" target="_blank" rel="noopener">SAMHSA</a></li>
+        </ul>
+      </div>
+      <div>
+        <strong>Legal</strong>
+        <ul>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+        </ul>
+      </div>
+      <div>
+        <small>
+          This tool is informational only and not a substitute for professional care. If you are in crisis, contact
+          local emergency services or a crisis hotline.
+        </small>
+      </div>
+    </div>
   </footer>
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>

@@ -59,3 +59,13 @@ isort --check-only .
 
 ## Disclaimer
 This tool is informational only and not medical advice. If in crisis, contact local emergency services.
+
+## Privacy & AI data handling
+- The app stores no personal data by default. If you enable AI-assisted suggestions, the app will send a sanitized, non-identifying summary of your responses to the configured AI provider. This excludes names and truncates free-text notes to 500 characters.
+- Do not enter highly sensitive personal information into the free-text field; the app is not a secure medical record system.
+- For production deployments, configure secure storage, access controls, and a privacy policy appropriate for your jurisdiction.
+
+## Repository organization & contributions
+- Consider adding a `CONTRIBUTING.md` with coding guidelines, and a `.github/workflows/ci.yml` to run tests on push/pull requests.
+- Suggested repo layout: keep `app/` for the Flask application, `tests/` for tests, `.github/` for workflows, and `docs/` for policy and deployment notes.
+- When pushing changes, use feature branches and open pull requests for review.
