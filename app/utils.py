@@ -3,6 +3,7 @@
 These functions centralize the scoring rules so tests can validate behavior
 and the routes can remain concise.
 """
+
 from typing import List, Tuple
 
 

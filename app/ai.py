@@ -1,7 +1,6 @@
 import os
-import time
-from typing import Optional, Dict, Any
 from functools import lru_cache
+from typing import Any, Dict, Optional
 
 _CACHE_TTL = int(os.getenv("AI_CACHE_TTL_SEC", "300"))
 
@@ -32,7 +31,13 @@ def _sanitize_summary(summary: Dict[str, Any]) -> Dict[str, Any]:
 
 def _cache_key(san: Dict[str, Any]) -> str:
     # simple stable string key for sanitized payload – small and deterministic
-    return f"phq:{san.get('phq9_score')}-gad:{san.get('gad7_score')}-mood:{san.get('mood')}-age:{san.get('age')}"
+    parts = [
+        f"phq:{san.get('phq9_score')}",
+        f"gad:{san.get('gad7_score')}",
+        f"mood:{san.get('mood')}",
+        f"age:{san.get('age')}",
+    ]
+    return "-".join(parts)
 
 
 def generate_ai_feedback(summary: Dict[str, Any]) -> Optional[str]:
@@ -56,17 +61,26 @@ def generate_ai_feedback(summary: Dict[str, Any]) -> Optional[str]:
 
             client = OpenAI(api_key=api_key)
             system = (
-                "You are a supportive, non-clinical assistant. Provide short, practical, and safe "
-                "well-being suggestions. Avoid diagnostics or medical claims. Encourage reaching out to "
-                "trusted people or professionals when appropriate, and include a brief safety note if "
-                "risk indicators appear. Keep the response under 120 words."
+                "You are a supportive, non-clinical assistant. Provide short, practical, "
+                "and safe well-being suggestions. Avoid diagnostics or medical claims. "
+                "Encourage reaching out to trusted people or professionals when appropriate, "
+                "and include a brief safety note if risk indicators appear. Keep the "
+                "response under 120 words."
             )
             user = (
-                f"Age: {sanitized.get('age')}. Mood: {sanitized.get('mood')}. "
-                f"Sleep: {sanitized.get('sleep_hours')} hours. Stress: {sanitized.get('stress_level')}/5. "
-                f"PHQ-9: {sanitized.get('phq9_score')} ({sanitized.get('phq9_level')}). "
-                f"GAD-7: {sanitized.get('gad7_score')} ({sanitized.get('gad7_level')}). "
-                f"Notes (redacted): {sanitized.get('notes','')}. Suggestions so far: {sanitized.get('suggestions')}"
+                (
+                    f"Age: {sanitized.get('age')}. Mood: {sanitized.get('mood')}. "
+                    f"Sleep: {sanitized.get('sleep_hours')} hours. "
+                    f"Stress: {sanitized.get('stress_level')}/5. "
+                )
+                + (
+                    f"PHQ-9: {sanitized.get('phq9_score')} ({sanitized.get('phq9_level')}). "
+                    f"GAD-7: {sanitized.get('gad7_score')} ({sanitized.get('gad7_level')}). "
+                )
+                + (
+                    f"Notes (redacted): {sanitized.get('notes','')}. "
+                    f"Suggestions so far: {sanitized.get('suggestions')}"
+                )
             )
 
             model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
@@ -78,7 +92,9 @@ def generate_ai_feedback(summary: Dict[str, Any]) -> Optional[str]:
                 temperature=0.4,
                 max_tokens=220,
             )
-            content = response.choices[0].message.content if getattr(response, 'choices', None) else None
+            content = (
+                response.choices[0].message.content if getattr(response, "choices", None) else None
+            )
             return (content or "").strip() or None
         except Exception:
             return None
@@ -86,5 +102,3 @@ def generate_ai_feedback(summary: Dict[str, Any]) -> Optional[str]:
     # call cached function – serialize small payload string for cache stability
     payload_serialized = str(sorted(sanitized.items()))
     return _call_cached(key, payload_serialized)
-
-

@@ -41,6 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const submitBtn = document.getElementById('submitBtn');
+    // Apply progress widths set in templates using data-width to avoid Jinja in inline CSS
+    document.querySelectorAll('.progress-fill[data-width]').forEach((el) => {
+      const w = el.getAttribute('data-width');
+      if (!w) return;
+      el.style.width = w + '%';
+    });
     if (!valid) {
       e.preventDefault();
       if (banner) {

@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, render_template
 from flask import current_app as app
 
-
 health_bp = Blueprint("health", __name__)
 
 
@@ -19,5 +18,3 @@ def register_error_handlers(flask_app):
     def server_error(_):
         app.logger.exception("Unhandled exception")
         return render_template("500.html"), 500
-
-

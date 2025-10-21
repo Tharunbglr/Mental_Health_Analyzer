@@ -1,14 +1,14 @@
-from flask import Flask
-from pathlib import Path
-from logging.handlers import RotatingFileHandler
 import logging
 import os
+from logging.handlers import RotatingFileHandler
+from pathlib import Path
 
-from flask_wtf.csrf import CSRFProtect
+from dotenv import load_dotenv
+from flask import Flask
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_talisman import Talisman
-from dotenv import load_dotenv
+from flask_wtf.csrf import CSRFProtect
 
 from .config import get_config_class
 
@@ -16,8 +16,8 @@ from .config import get_config_class
 def create_app() -> Flask:
     app = Flask(__name__)
     # Fix Railway redirects issue
-    app.config['PREFERRED_URL_SCHEME'] = 'https'
-    app.config['SERVER_NAME'] = None
+    app.config["PREFERRED_URL_SCHEME"] = "https"
+    app.config["SERVER_NAME"] = None
     # Load env from project root and instance folder if present
     load_dotenv()  # .env in project root
     try:
@@ -30,10 +30,12 @@ def create_app() -> Flask:
     Path(app.instance_path).mkdir(parents=True, exist_ok=True)
 
     from .routes import bp as main_bp
+
     app.register_blueprint(main_bp)
 
     # Register error handlers and health
     from .health import health_bp, register_error_handlers
+
     app.register_blueprint(health_bp)
     register_error_handlers(app)
 
@@ -61,6 +63,7 @@ def _configure_logging(app: Flask) -> None:
     @app.before_request
     def _inject_request_logging_fields():
         from flask import g, request
+
         g.log_fields = {
             "remote_addr": request.remote_addr,
             "method": request.method,
@@ -71,12 +74,13 @@ def _configure_logging(app: Flask) -> None:
         def filter(self, record: logging.LogRecord) -> bool:
             try:
                 from flask import g
+
                 for k, v in getattr(g, "log_fields", {}).items():
                     setattr(record, k, v)
             except Exception:
-                setattr(record, "remote_addr", "-")
-                setattr(record, "method", "-")
-                setattr(record, "path", "-")
+                record.remote_addr = "-"
+                record.method = "-"
+                record.path = "-"
             return True
 
     handler.addFilter(RequestContextFilter())
@@ -86,24 +90,24 @@ def _configure_logging(app: Flask) -> None:
 
 def _configure_security(app: Flask) -> None:
     # Disable Talisman on Railway to prevent redirect issues
-    if app.config.get('ENV') == 'production' and 'railway' in os.getenv('RAILWAY_ENVIRONMENT', ''):
+    if app.config.get("ENV") == "production" and "railway" in os.getenv("RAILWAY_ENVIRONMENT", ""):
         return
-    
+
     csp = {
-        'default-src': ["'self'"],
-        'script-src': ["'self'"],
-        'style-src': ["'self'", "'unsafe-inline'"],
-        'img-src': ["'self'", 'data:'],
-        'connect-src': ["'self'"],
-        'object-src': ["'none'"],
-        'base-uri': ["'self'"],
-        'frame-ancestors': ["'none'"],
+        "default-src": ["'self'"],
+        "script-src": ["'self'"],
+        "style-src": ["'self'", "'unsafe-inline'"],
+        "img-src": ["'self'", "data:"],
+        "connect-src": ["'self'"],
+        "object-src": ["'none'"],
+        "base-uri": ["'self'"],
+        "frame-ancestors": ["'none'"],
     }
     Talisman(app, content_security_policy=csp, strict_transport_security=True)
 
 
 def _configure_rate_limiting(app: Flask) -> Limiter:
-    limiter = Limiter(get_remote_address, storage_uri=app.config['RATELIMIT_STORAGE_URI'])
+    limiter = Limiter(get_remote_address, storage_uri=app.config["RATELIMIT_STORAGE_URI"])
     limiter.init_app(app)
     return limiter
 
@@ -112,5 +116,3 @@ def _configure_csrf(app: Flask) -> CSRFProtect:
     csrf = CSRFProtect()
     csrf.init_app(app)
     return csrf
-
-

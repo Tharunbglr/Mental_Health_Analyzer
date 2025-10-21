@@ -14,7 +14,7 @@
     <div class="score-card">
       <div class="score">PHQ‑9: {{ summary.phq9_score }} / 27</div>
       <div class="progress-bar">
-        <div class="progress-fill" style="width: {{ ((summary.phq9_score / 27) * 100) | round(1) ~ '%' }};"></div>
+        <div class="progress-fill" data-width="{{ ((summary.phq9_score / 27) * 100) | round(1) }}"></div>
       </div>
       <div
         class="badge {{ 'normal' if summary.phq9_level == 'Minimal' else 'mild' if summary.phq9_level == 'Mild' else 'moderate' if 'Moderate' in summary.phq9_level else 'severe' }}">
@@ -23,7 +23,7 @@
     <div class="score-card">
       <div class="score">GAD‑7: {{ summary.gad7_score }} / 21</div>
       <div class="progress-bar">
-        <div class="progress-fill" style="width: {{ ((summary.gad7_score / 21) * 100) | round(1) ~ '%' }};"></div>
+        <div class="progress-fill" data-width="{{ ((summary.gad7_score / 21) * 100) | round(1) }}"></div>
       </div>
       <div
         class="badge {{ 'normal' if summary.gad7_level == 'Minimal' else 'mild' if summary.gad7_level == 'Mild' else 'moderate' if summary.gad7_level == 'Moderate' else 'severe' }}">

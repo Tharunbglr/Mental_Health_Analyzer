@@ -1,9 +1,7 @@
-from flask import Blueprint, render_template, request, redirect, url_for
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
-from .ai import generate_ai_feedback
-from .utils import score_phq9, score_gad7
+from flask import Blueprint, render_template, request
 
+from .ai import generate_ai_feedback
+from .utils import score_gad7, score_phq9
 
 bp = Blueprint("main", __name__)
 
@@ -11,6 +9,7 @@ bp = Blueprint("main", __name__)
 @bp.get("/")
 def index():
     return render_template("index.html")
+
 
 @bp.get("/test")
 def test():
@@ -130,16 +129,19 @@ def analyze():
 
     if mood in {"very low", "low"}:
         suggestions.append(
-            "Your mood seems low. Consider small enjoyable activities and reaching out to someone you trust."
+            "Your mood seems low. Consider small enjoyable activities and reaching out to "
+            "someone you trust."
         )
 
     if sleep_hours < 6:
         suggestions.append(
-            "You're sleeping less than recommended. Try a consistent bedtime and reduce screens before bed."
+            "You're sleeping less than recommended. Try a consistent bedtime and reduce "
+            "screens before bed."
         )
     elif sleep_hours > 9:
         suggestions.append(
-            "You're sleeping a lot. If this persists, consider discussing with a healthcare professional."
+            "You're sleeping a lot. If this persists, consider discussing with a "
+            "healthcare professional."
         )
 
     if stress_level >= 4:
@@ -150,12 +152,14 @@ def analyze():
     if any(word in thoughts.lower() for word in ["hopeless", "harm", "suicide", "worthless"]):
         risk_flag = True
         suggestions.append(
-            "If you feel unsafe or at risk of harming yourself, seek immediate help: local emergency services or a crisis hotline in your country."
+            "If you feel unsafe or at risk of harming yourself, seek immediate help: "
+            "local emergency services or a crisis hotline in your country."
         )
 
     if not suggestions:
         suggestions.append(
-            "You're doing many things right. Keep monitoring your well-being and maintain supportive routines."
+            "You're doing many things right. Keep monitoring your well-being and maintain "
+            "supportive routines."
         )
 
     # Use centralized scoring helpers
@@ -165,13 +169,19 @@ def analyze():
     # escalate risk if suicidal ideation present
     if suicidal_flag:
         risk_flag = True
-        suggestions.insert(0, "You reported some thoughts of self-harm or that you'd be better off dead. Please seek immediate help or contact a crisis hotline.")
+        suggestions.insert(
+            0,
+            "You reported some thoughts of self-harm or that you'd be better off dead. "
+            "Please seek immediate help or contact a crisis hotline.",
+        )
 
     # Lifestyle nudges
     if exercise_days < 2:
         suggestions.append("Consider adding 10–15 minute walks on 2+ days each week.")
     if caffeine_cups > 3:
-        suggestions.append("High caffeine can impact anxiety and sleep; consider reducing gradually.")
+        suggestions.append(
+            "High caffeine can impact anxiety and sleep; consider reducing gradually."
+        )
     if screen_hours > 6:
         suggestions.append("Try short breaks and evening screen curfews to aid sleep and mood.")
     if support_level <= 2:
@@ -201,5 +211,3 @@ def analyze():
         ai_feedback = generate_ai_feedback(summary)
 
     return render_template("result.html", summary=summary, ai_feedback=ai_feedback)
-
-

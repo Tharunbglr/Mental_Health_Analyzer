@@ -11,14 +11,17 @@ def test_healthz_ok(client):
 
 
 def test_analyze_validation(client):
-    res = client.post("/analyze", data={
-        "name": "",
-        "age": "abc",
-        "mood": "",
-        "sleep": "-1",
-        "stress": "7",
-        "thoughts": "",
-    })
+    res = client.post(
+        "/analyze",
+        data={
+            "name": "",
+            "age": "abc",
+            "mood": "",
+            "sleep": "-1",
+            "stress": "7",
+            "thoughts": "",
+        },
+    )
     assert res.status_code == 200
     assert b"Name is required" in res.data or b"Age must be a number" in res.data
 
@@ -80,5 +83,3 @@ def test_analyze_ai_opt_in(client, monkeypatch):
     assert res.status_code == 200
     # AI block should be present when generate_ai_feedback returns text
     assert b"AI-assisted insights" in res.data or b"This is an AI suggestion." in res.data
-
-

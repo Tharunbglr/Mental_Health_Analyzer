@@ -1,12 +1,15 @@
-from flask import Flask, request, jsonify
 import os
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-key')
+# ruff: noqa
+from flask import Flask, jsonify, request
 
-@app.route('/')
+app = Flask(__name__)
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev-key")
+
+
+@app.route("/")
 def index():
-    return '''
+    return """
     <!DOCTYPE html>
     <html>
     <head>
@@ -70,32 +73,41 @@ def index():
         </div>
     </body>
     </html>
-    '''
+    """
 
-@app.route('/analyze', methods=['POST'])
+
+@app.route("/analyze", methods=["POST"])
 def analyze():
-    name = request.form.get('name', '')
-    age = request.form.get('age', '')
-    mood = request.form.get('mood', '')
-    sleep = request.form.get('sleep', '')
-    stress = request.form.get('stress', '')
-    thoughts = request.form.get('thoughts', '')
-    
+    name = request.form.get("name", "")
+    age = request.form.get("age", "")
+    mood = request.form.get("mood", "")
+    sleep = request.form.get("sleep", "")
+    stress = request.form.get("stress", "")
+    thoughts = request.form.get("thoughts", "")
+
     # Simple analysis
     suggestions = []
-    if mood in ['very low', 'low']:
-        suggestions.append("Your mood seems low. Consider small enjoyable activities and reaching out to someone you trust.")
-    
+    if mood in ["very low", "low"]:
+        suggestions.append(
+            "Your mood seems low. Consider small enjoyable activities and reaching out to someone you trust."
+        )
+
     if float(sleep) < 6:
-        suggestions.append("You're sleeping less than recommended. Try a consistent bedtime and reduce screens before bed.")
-    
+        suggestions.append(
+            "You're sleeping less than recommended. Try a consistent bedtime and reduce screens before bed."
+        )
+
     if int(stress) >= 4:
-        suggestions.append("High stress reported. Try short breathing exercises, brief walks, or journaling.")
-    
+        suggestions.append(
+            "High stress reported. Try short breathing exercises, brief walks, or journaling."
+        )
+
     if not suggestions:
-        suggestions.append("You're doing many things right. Keep monitoring your well-being and maintain supportive routines.")
-    
-    return f'''
+        suggestions.append(
+            "You're doing many things right. Keep monitoring your well-being and maintain supportive routines."
+        )
+
+    return f"""
     <!DOCTYPE html>
     <html>
     <head>
@@ -124,16 +136,19 @@ def analyze():
         </div>
     </body>
     </html>
-    '''
+    """
 
-@app.route('/test')
+
+@app.route("/test")
 def test():
     return "App is working!"
 
-@app.route('/healthz')
+
+@app.route("/healthz")
 def health():
     return jsonify({"status": "ok"})
 
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8080))
-    app.run(host='0.0.0.0', port=port, debug=False)
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port, debug=False)

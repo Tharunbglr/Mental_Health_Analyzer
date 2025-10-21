@@ -31,5 +31,3 @@ def get_config_class():
     if env.startswith("dev"):
         return DevelopmentConfig
     return ProductionConfig
-
-

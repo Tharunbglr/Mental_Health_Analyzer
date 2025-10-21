@@ -1,4 +1,4 @@
-from app.utils import score_phq9, score_gad7
+from app.utils import score_gad7, score_phq9
 
 
 def test_score_phq9_minimal_and_suicidal_flag():
@@ -10,11 +10,10 @@ def test_score_phq9_minimal_and_suicidal_flag():
 
 
 def test_score_phq9_invalid_length():
-    try:
+    import pytest
+
+    with pytest.raises(ValueError):
         score_phq9([0, 1])
-        assert False, "Expected ValueError for wrong length"
-    except ValueError:
-        pass
 
 
 def test_score_gad7_levels():
