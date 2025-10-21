@@ -4,5 +4,5 @@ black==24.8.0
 isort==5.13.2
 ruff==0.6.9
 pre-commit==4.0.1
-
-
+bandit==2.0.0
+safety==3.0.1

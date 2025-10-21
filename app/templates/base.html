@@ -17,6 +17,14 @@
   <header class="site-header">
     <h1>Mental Health Analyzer</h1>
     <p class="tagline">Personalized, informative suggestions — not medical advice</p>
+    <div class="emergency-banner">
+      <h3><i class="fas fa-phone-volume"></i> 24/7 Crisis Support</h3>
+      <div>
+        <a href="tel:988" class="emergency-number"><i class="fas fa-phone"></i>988 Suicide & Crisis Lifeline</a>
+        <a href="tel:18662747724" class="emergency-number"><i class="fas fa-phone"></i>Disaster Distress Helpline</a>
+      </div>
+      <small>For immediate emergency assistance, call your local emergency services (911 in the US)</small>
+    </div>
   </header>
   <main class="container">
     {% block content %}{% endblock %}
@@ -24,25 +32,37 @@
   <footer class="site-footer">
     <div class="footer-columns">
       <div>
-        <strong>Resources</strong>
+        <strong>Crisis Resources</strong>
         <ul>
-          <li><a href="https://www.who.int/health-topics/mental-health" target="_blank" rel="noopener">WHO: Mental
-              health</a></li>
-          <li><a href="https://www.mentalhealth.gov/" target="_blank" rel="noopener">MentalHealth.gov</a></li>
-          <li><a href="https://www.samhsa.gov/" target="_blank" rel="noopener">SAMHSA</a></li>
+          <li><a href="https://988lifeline.org/" target="_blank" rel="noopener">988 Lifeline</a></li>
+          <li><a href="https://www.samhsa.gov/find-treatment" target="_blank" rel="noopener">Find Treatment</a></li>
+          <li><a href="https://www.crisistextline.org/" target="_blank" rel="noopener">Crisis Text Line</a></li>
         </ul>
       </div>
       <div>
-        <strong>Legal</strong>
+        <strong>Support Resources</strong>
         <ul>
-          <li><a href="#">Privacy</a></li>
-          <li><a href="#">Terms</a></li>
+          <li><a href="https://www.who.int/health-topics/mental-health" target="_blank" rel="noopener">WHO: Mental
+              Health</a></li>
+          <li><a href="https://www.mentalhealth.gov/" target="_blank" rel="noopener">MentalHealth.gov</a></li>
+          <li><a href="https://www.nami.org/" target="_blank" rel="noopener">NAMI</a></li>
+        </ul>
+      </div>
+      <div>
+        <strong>Information</strong>
+        <ul>
+          <li><a href="{{ url_for('main.privacy') }}">Privacy Policy</a></li>
+          <li><a href="{{ url_for('main.terms') }}">Terms of Use</a></li>
+          <li><a href="https://github.com/yourusername/mental-health-analyzer" target="_blank" rel="noopener">About</a>
+          </li>
         </ul>
       </div>
       <div>
         <small>
-          This tool is informational only and not a substitute for professional care. If you are in crisis, contact
-          local emergency services or a crisis hotline.
+          <strong>Important Note:</strong><br>
+          This tool provides informational analysis only and is not a substitute for professional mental health care.
+          If you're experiencing thoughts of self-harm or suicide, please contact emergency services or a crisis hotline
+          immediately.
         </small>
       </div>
     </div>

@@ -1,18 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
+{% if summary.risk_flag %}
+<div class="alert" role="alert">
+  <i class="fas fa-exclamation-triangle"></i>
+  <div>
+    <strong>Important Safety Message:</strong><br>
+    Based on your responses, we're concerned about your immediate safety. Please reach out for help:
+    <div class="crisis-links">
+      <a href="tel:988" class="crisis-link"><i class="fas fa-phone"></i>988 Suicide & Crisis Lifeline</a>
+      <a href="https://988lifeline.org/chat/" class="crisis-link" target="_blank" rel="noopener"><i
+          class="fas fa-comments"></i>Chat with a Counselor</a>
+      <a href="tel:911" class="crisis-link"><i class="fas fa-ambulance"></i>911 Emergency Services</a>
+    </div>
+  </div>
+</div>
+{% endif %}
+
 <section class="card">
-  <h2>Personalized Suggestions</h2>
+  <h2>Personalized Assessment</h2>
   <div class="summary">
     <p><strong>Name:</strong> {{ summary.name|e }}</p>
     <p><strong>Age:</strong> {{ summary.age }}</p>
-    <p><strong>Mood:</strong> {{ summary.mood.title() }}</p>
-    <p><strong>Sleep:</strong> {{ summary.sleep_hours }} hours</p>
-    <p><strong>Stress:</strong> {{ summary.stress_level }} / 5</p>
+    <p><strong>Current Mood:</strong> {{ summary.mood.title() }}</p>
+    <p><strong>Sleep Last Night:</strong> {{ summary.sleep_hours }} hours</p>
+    <p><strong>Current Stress Level:</strong> {{ summary.stress_level }} / 5</p>
   </div>
 
   <div class="score-cards">
     <div class="score-card">
-      <div class="score">PHQ‑9: {{ summary.phq9_score }} / 27</div>
+      <h3>Depression Screening (PHQ‑9)</h3>
+      <div class="score">{{ summary.phq9_score }} / 27</div>
       <div class="progress-bar">
         <div class="progress-fill" data-width="{{ ((summary.phq9_score / 27) * 100) | round(1) }}"></div>
       </div>
@@ -21,7 +38,8 @@
         {{ summary.phq9_level }}</div>
     </div>
     <div class="score-card">
-      <div class="score">GAD‑7: {{ summary.gad7_score }} / 21</div>
+      <h3>Anxiety Screening (GAD‑7)</h3>
+      <div class="score">{{ summary.gad7_score }} / 21</div>
       <div class="progress-bar">
         <div class="progress-fill" data-width="{{ ((summary.gad7_score / 21) * 100) | round(1) }}"></div>
       </div>
@@ -32,36 +50,82 @@
   </div>
 
   <div class="interpretation card">
-    <h3>How to interpret scores</h3>
-    <p class="hint"><strong>PHQ‑9:</strong> 0–4 minimal; 5–9 mild; 10–14 moderate; 15–19 moderately severe; 20–27
-      severe.</p>
-    <p class="hint"><strong>GAD‑7:</strong> 0–4 minimal; 5–9 mild; 10–14 moderate; 15–21 severe.</p>
-    <p class="hint">These tools screen for symptoms — they do not replace clinical assessment. If your scores fall in
-      the moderate–severe range, consider reaching out to a healthcare professional or a local mental health service.
-    </p>
+    <h3><i class="fas fa-info-circle"></i> Understanding Your Scores</h3>
+
+    <div class="score-guide">
+      <div>
+        <h4>Depression Screening (PHQ‑9)</h4>
+        <ul class="score-ranges">
+          <li class="minimal">0–4: Minimal symptoms</li>
+          <li class="mild">5–9: Mild symptoms</li>
+          <li class="moderate">10–14: Moderate symptoms</li>
+          <li class="severe">15–19: Moderately severe</li>
+          <li class="severe">20–27: Severe symptoms</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Anxiety Screening (GAD‑7)</h4>
+        <ul class="score-ranges">
+          <li class="minimal">0–4: Minimal symptoms</li>
+          <li class="mild">5–9: Mild symptoms</li>
+          <li class="moderate">10–14: Moderate symptoms</li>
+          <li class="severe">15–21: Severe symptoms</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="important-note">
+      <p><i class="fas fa-exclamation-circle"></i> <strong>Important Note:</strong></p>
+      <ul>
+        <li>These screening tools help identify potential symptoms but do not replace professional diagnosis.</li>
+        <li>If your scores fall in the moderate to severe range, we strongly encourage you to discuss these results with
+          a mental health professional.</li>
+        <li>Scores can fluctuate over time and are influenced by recent events and stressors.</li>
+      </ul>
+    </div>
   </div>
 
-  <ul class="suggestions">
-    {% for s in summary.suggestions %}
-    <li>{{ s }}</li>
-    {% endfor %}
-  </ul>
+  <div class="suggestions-card">
+    <h3><i class="fas fa-lightbulb"></i> Personalized Suggestions</h3>
+    <ul class="suggestions">
+      {% for s in summary.suggestions %}
+      <li>{{ s }}</li>
+      {% endfor %}
+    </ul>
+  </div>
 
-  {% if ai_feedback %}
-  <div class="ai-card">
-    <h3>AI-assisted insights</h3>
-    <p>{{ ai_feedback }}</p>
+  {% if summary.phq9_score >= 10 or summary.gad7_score >= 10 %}
+  <div class="crisis-resources">
+    <h3><i class="fas fa-hand-holding-heart"></i> Professional Support Options</h3>
+    <p>Based on your responses, we recommend considering professional support. Here are some resources to help:</p>
+    <div class="crisis-links">
+      <a href="https://www.psychologytoday.com/us/therapists" class="resource-link" target="_blank" rel="noopener">
+        <i class="fas fa-search"></i>Find a Therapist
+      </a>
+      <a href="https://www.samhsa.gov/find-treatment" class="resource-link" target="_blank" rel="noopener">
+        <i class="fas fa-hospital"></i>Treatment Locator
+      </a>
+      <a href="https://www.nami.org/help" class="resource-link" target="_blank" rel="noopener">
+        <i class="fas fa-hands-helping"></i>NAMI HelpLine
+      </a>
+    </div>
   </div>
   {% endif %}
 
-  {% if summary.risk_flag %}
-  <div class="alert">
-    If you are in immediate danger, call your local emergency number.
+  {% if ai_feedback %}
+  <div class="ai-card">
+    <h3><i class="fas fa-robot"></i> AI-Assisted Insights</h3>
+    <p>{{ ai_feedback }}</p>
+    <small class="hint">This analysis is generated by AI to provide additional perspective. Always consult healthcare
+      professionals for medical advice.</small>
   </div>
   {% endif %}
 
   <div class="actions">
-    <a class="button" href="{{ url_for('main.index') }}">Back</a>
+    <a class="button" href="{{ url_for('main.index') }}"><i class="fas fa-arrow-left"></i> Take Assessment Again</a>
+    <a class="button" href="https://www.nimh.nih.gov/health/topics" target="_blank" rel="noopener">
+      <i class="fas fa-book-medical"></i> Learn More About Mental Health
+    </a>
   </div>
 </section>
 {% endblock %}

@@ -1,0 +1,130 @@
+2025-10-21 12:13:43,378 ERROR app 127.0.0.1 GET /error-test - Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "C:\Users\user\Desktop\Mental Health Analyzer\tests\test_routes.py", line 39, in error_test
+    abort(500)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\helpers.py", line 272, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\werkzeug\exceptions.py", line 876, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.InternalServerError: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2025-10-21 12:13:43,378 ERROR app 127.0.0.1 GET /error-test - Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "C:\Users\user\Desktop\Mental Health Analyzer\tests\test_routes.py", line 39, in error_test
+    abort(500)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\helpers.py", line 272, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\werkzeug\exceptions.py", line 876, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.InternalServerError: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2025-10-21 12:13:43,378 ERROR app 127.0.0.1 GET /error-test - Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "C:\Users\user\Desktop\Mental Health Analyzer\tests\test_routes.py", line 39, in error_test
+    abort(500)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\helpers.py", line 272, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\werkzeug\exceptions.py", line 876, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.InternalServerError: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2025-10-21 12:13:43,378 ERROR app 127.0.0.1 GET /error-test - Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "C:\Users\user\Desktop\Mental Health Analyzer\tests\test_routes.py", line 39, in error_test
+    abort(500)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\helpers.py", line 272, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\werkzeug\exceptions.py", line 876, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.InternalServerError: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2025-10-21 12:13:43,378 ERROR app 127.0.0.1 GET /error-test - Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "C:\Users\user\Desktop\Mental Health Analyzer\tests\test_routes.py", line 39, in error_test
+    abort(500)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\helpers.py", line 272, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\werkzeug\exceptions.py", line 876, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.InternalServerError: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2025-10-21 12:14:03,920 ERROR app 127.0.0.1 GET /error-test - Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "C:\Users\user\Desktop\Mental Health Analyzer\tests\test_routes.py", line 39, in error_test
+    abort(500)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\helpers.py", line 272, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\werkzeug\exceptions.py", line 876, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.InternalServerError: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2025-10-21 12:14:03,920 ERROR app 127.0.0.1 GET /error-test - Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "C:\Users\user\Desktop\Mental Health Analyzer\tests\test_routes.py", line 39, in error_test
+    abort(500)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\helpers.py", line 272, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\werkzeug\exceptions.py", line 876, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.InternalServerError: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2025-10-21 12:14:03,920 ERROR app 127.0.0.1 GET /error-test - Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "C:\Users\user\Desktop\Mental Health Analyzer\tests\test_routes.py", line 39, in error_test
+    abort(500)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\helpers.py", line 272, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\werkzeug\exceptions.py", line 876, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.InternalServerError: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2025-10-21 12:14:03,920 ERROR app 127.0.0.1 GET /error-test - Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "C:\Users\user\Desktop\Mental Health Analyzer\tests\test_routes.py", line 39, in error_test
+    abort(500)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\helpers.py", line 272, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\werkzeug\exceptions.py", line 876, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.InternalServerError: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2025-10-21 12:14:03,920 ERROR app 127.0.0.1 GET /error-test - Unhandled exception
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "C:\Users\user\Desktop\Mental Health Analyzer\tests\test_routes.py", line 39, in error_test
+    abort(500)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\helpers.py", line 272, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python310\lib\site-packages\werkzeug\exceptions.py", line 876, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.InternalServerError: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.

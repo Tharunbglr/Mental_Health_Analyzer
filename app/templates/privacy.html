@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="card">
+    <h2>Privacy Policy</h2>
+
+    <div class="content-section">
+        <h3>Information We Collect</h3>
+        <p>This mental health analysis tool collects the following types of information:</p>
+        <ul>
+            <li>Responses to questionnaires (PHQ-9 and GAD-7)</li>
+            <li>Basic demographic information (age)</li>
+            <li>Lifestyle information (sleep, exercise, etc.)</li>
+            <li>Optional free-text notes</li>
+        </ul>
+    </div>
+
+    <div class="content-section">
+        <h3>How We Use Your Information</h3>
+        <p>Your information is used to:</p>
+        <ul>
+            <li>Generate immediate feedback and suggestions</li>
+            <li>Provide crisis resources when needed</li>
+            <li>If consented, generate AI-assisted insights (anonymized)</li>
+        </ul>
+    </div>
+
+    <div class="content-section">
+        <h3>Data Protection</h3>
+        <ul>
+            <li>We do not store your responses persistently</li>
+            <li>All analysis is performed in-memory</li>
+            <li>Free-text entries are sanitized before AI processing</li>
+            <li>No personally identifiable information is shared with third parties</li>
+        </ul>
+    </div>
+
+    <div class="content-section">
+        <h3>AI Processing</h3>
+        <p>If you opt in to AI-assisted insights:</p>
+        <ul>
+            <li>Data is anonymized before processing</li>
+            <li>Free text is limited to 500 characters</li>
+            <li>Names and identifiable details are removed</li>
+            <li>Processing is done via secure API endpoints</li>
+        </ul>
+    </div>
+
+    <div class="content-section">
+        <h3>Your Rights</h3>
+        <p>You have the right to:</p>
+        <ul>
+            <li>Opt out of AI processing</li>
+            <li>Request information about your data</li>
+            <li>Request deletion of your data</li>
+        </ul>
+    </div>
+
+    <div class="content-section">
+        <h3>Contact Us</h3>
+        <p>For privacy-related questions or concerns, contact us at:</p>
+        <p><a href="mailto:privacy@example.com">privacy@example.com</a></p>
+    </div>
+</section>
+{% endblock %}

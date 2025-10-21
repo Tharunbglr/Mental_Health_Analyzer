@@ -15,6 +15,14 @@ def index():
 def test():
     return "App is working!"
 
+@bp.get("/privacy")
+def privacy():
+    return render_template("privacy.html")
+
+@bp.get("/terms")
+def terms():
+    return render_template("terms.html")
+
 
 @bp.post("/analyze")
 def analyze():
