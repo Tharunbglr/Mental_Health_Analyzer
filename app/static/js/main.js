@@ -1,5 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('mh-form');
+  // Apply progress widths set in templates using data-width so
+  // progress bars render correctly on pages without the form
+  // (for example the results page).
+  document.querySelectorAll('.progress-fill[data-width]').forEach((el) => {
+    const w = el.getAttribute('data-width');
+    if (!w) return;
+    el.style.width = w + '%';
+  });
   if (!form) return;
 
   form.addEventListener('submit', (e) => {
@@ -41,12 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const submitBtn = document.getElementById('submitBtn');
-    // Apply progress widths set in templates using data-width to avoid Jinja in inline CSS
-    document.querySelectorAll('.progress-fill[data-width]').forEach((el) => {
-      const w = el.getAttribute('data-width');
-      if (!w) return;
-      el.style.width = w + '%';
-    });
     if (!valid) {
       e.preventDefault();
       if (banner) {
