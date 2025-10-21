@@ -4,8 +4,6 @@ Flask-Talisman==1.1.0
 Flask-WTF==1.2.2
 Flask-Limiter[redis]==3.10.1
 openai>=1.51.2
-
-# Production dependencies
 gunicorn==21.2.0
 gevent==24.2.1
 redis==5.0.1
@@ -14,12 +12,5 @@ prometheus-flask-exporter==0.23.0
 pyOpenSSL==24.0.0
 blinker==1.7.0
 python-json-logger==2.0.7
-uwsgi==2.0.24
-supervisor==4.2.5
-
-# Monitoring and logging
-statsd==4.0.1
-dd-trace==1.20.1
-elastic-apm==6.20.0
 
 
